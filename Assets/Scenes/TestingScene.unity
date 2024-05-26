@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &573673042
 Transform:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   zoomMinSize: 4
   zoomMaxSize: 40
   zoomDampening: 7.5
-  rotateMaxSpeed: 1
+  rotateMaxSpeed: 0.2
   rotateSnapBackTime: 1
   edgeTolerance: 0.05
   enableEdgeScroll: 1

@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         _getKeyboardMovement();
-        if ( enableEdgeScroll )
+        if ( enableEdgeScroll && !rotating )
             _checkMouseAtScreenEdge();
         if ( enableDragScroll && !rotating )
             _dragCamera();
@@ -151,8 +151,7 @@ public class CameraController : MonoBehaviour
         targetPos = Vector3.zero;
     }
 
-    // 
-
+    // Event added to `Rotate.perform` input
     private void RotateCamera( InputAction.CallbackContext context ) {
         if(!rotating) {
             return;
@@ -161,6 +160,7 @@ public class CameraController : MonoBehaviour
         this.transform.rotation = Quaternion.Euler( 0f, val * rotateMaxSpeed + transform.rotation.eulerAngles.y, 0f );
     }
 
+    // Event added to `Zoom.perform` input
     private void ZoomCamera( InputAction.CallbackContext context ) {
         if( context.ReadValue<Vector2>().y > 0 ) {
             // zoom in - size gets smaller
