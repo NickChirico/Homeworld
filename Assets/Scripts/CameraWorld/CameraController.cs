@@ -37,6 +37,7 @@ public class CameraController : MonoBehaviour
 
     // rotation
     [SerializeField]
+    [Range( 0.01f, 1f )]
     private float rotateMaxSpeed = 1f;
     [SerializeField]
     private float rotateSnapBackTime = 0.5f;
@@ -70,7 +71,8 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        _getKeyboardMovement();
+        _getKeyboardInputs();
+
         if ( enableEdgeScroll && !rotating )
             _checkMouseAtScreenEdge();
         if ( enableDragScroll && !rotating )
@@ -117,7 +119,7 @@ public class CameraController : MonoBehaviour
         lastPosition = this.transform.position;
     }
 
-    private void _getKeyboardMovement() {
+    private void _getKeyboardInputs() {
         Vector3 inputValue = movement.ReadValue<Vector2>().x * _getCameraRight()
             + movement.ReadValue<Vector2>().y * _getCameraForward();
         inputValue = inputValue.normalized;
