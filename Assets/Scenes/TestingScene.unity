@@ -152,11 +152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fabc34390eefb4991475e4f10aa09a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SettingDistance: 0
   rows: 12
   columns: 12
   scale: 2.5
   gridPrefab: {fileID: 995915478915522572, guid: 1f31c66e67f46a342b982d4c073f3b89, type: 3}
   leftBottomLocation: {x: 0, y: 0.5, z: 0}
+  path: []
+  startX: 0
+  startY: 0
+  endX: 2
+  endY: 2
 --- !u!4 &224010333
 Transform:
   m_ObjectHideFlags: 0
@@ -460,7 +466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &974253261
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -565,7 +571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1032215655
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -762,7 +768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1444134863
 BoxCollider:
   m_ObjectHideFlags: 0

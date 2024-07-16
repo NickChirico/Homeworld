@@ -26,7 +26,7 @@ public class GridBehavior : MonoBehaviour
         if(gridPrefab != null ) {
             _generateGrid();
         } else {
-            throw new UnityException( "GridBehavior.Awake() --> Missing gridPrefab!" );
+            throw new UnityException( "GridBehavior.Awake() : Missing gridPrefab!" );
         }
     }
 
@@ -77,7 +77,7 @@ public class GridBehavior : MonoBehaviour
             step = gridArray[ x, y ].GetComponent<GridStat>().Visited - 1;
         } else {
             // CANNOT REACH LOCATION!
-            throw new System.Exception( $"Cant reach location! endLoc=({endX},{endY})" );
+            throw new System.Exception( $"Cant reach location : endLoc=({endX},{endY})" );
         }
 
         for(int i = step; step > -1; step-- ) {
@@ -123,27 +123,14 @@ public class GridBehavior : MonoBehaviour
         // dir tells which case to use
         switch ( dir ) {
             case LEFT:
-                if ( x - 1 > -1 && gridArray[ x - 1, y ] && gridArray[ x - 1, y ].GetComponent<GridStat>().Visited == step )
-                    return true;
-                else
-                    return false;
+                return x - 1 > -1 && gridArray[ x - 1, y ] && gridArray[ x - 1, y ].GetComponent<GridStat>().Visited == step;
             case DOWN:
-                if ( y - 1 > -1 && gridArray[ x, y - 1 ] && gridArray[ x, y - 1 ].GetComponent<GridStat>().Visited == step )
-                    return true;
-                else
-                    return false;
+                return y - 1 > -1 && gridArray[ x, y - 1 ] && gridArray[ x, y - 1 ].GetComponent<GridStat>().Visited == step;
             case RIGHT:
-                if ( x + 1 < columns && gridArray[ x + 1, y ] && gridArray[ x + 1, y ].GetComponent<GridStat>().Visited == step )
-                    return true;
-                else
-                    return false;
+                return x + 1 < columns && gridArray[ x + 1, y ] && gridArray[ x + 1, y ].GetComponent<GridStat>().Visited == step;
             case UP:
-                if ( y + 1 < rows && gridArray[ x, y + 1 ] && gridArray[ x, y + 1 ].GetComponent<GridStat>().Visited == step )
-                    return true;
-                else
-                    return false;
-
-            default: 
+                return y + 1 < rows && gridArray[ x, y + 1 ] && gridArray[ x, y + 1 ].GetComponent<GridStat>().Visited == step;
+            default:
                 return false;
         }
     }
