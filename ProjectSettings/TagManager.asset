@@ -6,6 +6,7 @@ TagManager:
   tags:
   - UNIT
   - TILE
+  - SELECTABLE
   layers:
   - Default
   - TransparentFX

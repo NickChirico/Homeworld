@@ -28,7 +28,7 @@ public class GridUnitController : MonoBehaviour
                 if ( hit.transform.CompareTag( "TILE" ) ) {
                     if(unitIsSelected ) {
                         Vector2Int targetCoords = hit.transform.GetComponent<GridLabeler>().GetCoords;
-                        Vector2Int startCoords = new Vector2Int((int) selectedUnit.position.x, (int) selectedUnit.position.y / gridManager.UnityGridSize );
+                        Vector2Int startCoords = new Vector2Int((int) selectedUnit.position.x, (int) selectedUnit.position.y / gridManager.GridTransformSize );
                         // TODO: move unit
                         selectedUnit.position = new Vector3( targetCoords.x, selectedUnit.position.y, targetCoords.y );
                         unitIsSelected = false;

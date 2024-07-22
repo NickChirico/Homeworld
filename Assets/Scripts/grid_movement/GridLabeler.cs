@@ -26,8 +26,8 @@ public class GridLabeler : MonoBehaviour
     private void UpdateCoordsLabel() {
         if ( !gridManager ) return;
         // TODO: Dont hardcode around (0,0) transform!
-        coordinates.x = Mathf.RoundToInt( transform.position.x / gridManager.UnityGridSize );
-        coordinates.y = Mathf.RoundToInt( transform.position.z / gridManager.UnityGridSize );
+        coordinates.x = Mathf.RoundToInt( transform.position.x / gridManager.GridTransformSize );
+        coordinates.y = Mathf.RoundToInt( transform.position.z / gridManager.GridTransformSize );
         gridLabel.text = $"{coordinates.x},{coordinates.y}";
     }
 }
