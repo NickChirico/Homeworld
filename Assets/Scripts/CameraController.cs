@@ -17,38 +17,30 @@ public class CameraController : MonoBehaviour
     private Transform cameraTransform;
     private Camera cam;
 
-    // panning movement
-    [SerializeField]
-    private float panSpeed = 5f;
-    [SerializeField]
-    private float panAcceleration = 10f;
-    [SerializeField]
-    private float panDamping = 15f;
+    [Header( "Panning Movement" )]
+    [SerializeField] private float panSpeed = 5f;
+    [SerializeField] private float panAcceleration = 10f;
+    [SerializeField] private float panDamping = 15f;
 
-    // zoom
-    [SerializeField]
-    private float zoomStep = 0.5f;
-    [SerializeField]
-    private float zoomMinSize = 4f;
-    [SerializeField]
-    private float zoomMaxSize = 40f;
-    [SerializeField]
-    private float zoomDampening = 7.5f;
+    [Header( "Zoom" )]
+    [SerializeField] private float zoomStep = 0.5f;
+    [SerializeField] private float zoomMinSize = 4f;
+    [SerializeField] private float zoomMaxSize = 40f;
+    [SerializeField] private float zoomDampening = 7.5f;
 
-    // rotation
-    [SerializeField]
-    private float rotateMaxSpeed = 1f;
-    [SerializeField]
-    private float rotateSnapBackTime = 0.5f;
+    [Header( "Rotation" )]
+    [SerializeField] private float rotateMaxSpeed = 1f;
+    [SerializeField] private float rotateSnapBackTime = 0.5f;
 
-    // screen-edge motion
+    [Header( "Edge Scroll" )]
     [SerializeField]
     [Range( 0f, 0.1f )]
     private float edgeTolerance = 0.05f;
 
-    // bool checks
-    [SerializeField]
-    private bool enableEdgeScroll = true, enableDragScroll = true;
+    [Space( 5 )]
+    [Header( "Checks" )]
+    [SerializeField] private bool enableEdgeScroll = true;
+    [SerializeField] private bool enableDragScroll = true;
 
     // instance vars
     private float currentSpeed;

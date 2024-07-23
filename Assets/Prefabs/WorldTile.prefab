@@ -94,11 +94,10 @@ GameObject:
   - component: {fileID: 99301776622880372}
   - component: {fileID: 7021262282976384328}
   - component: {fileID: 3799471163117519238}
-  - component: {fileID: -8502259702611347557}
-  - component: {fileID: 7122120477274030834}
+  - component: {fileID: 9082716404006276364}
   - component: {fileID: 4177770952618889591}
   m_Layer: 0
-  m_Name: GridTile
+  m_Name: WorldTile
   m_TagString: TILE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bf70e88e0899b469f4907520e03875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-8502259702611347557
+--- !u!114 &9082716404006276364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,21 +162,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2775472201353276404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc6736d2e1f24b644870de500d3863d0, type: 3}
+  m_Script: {fileID: 11500000, guid: b7faa8c5a7f890c4c9a596011a56154f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7122120477274030834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2775472201353276404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f03c39594928dbf4ea62754102439c7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  hasSelectIndicator: 0
+  transformY_Height: 0.54
 --- !u!114 &4177770952618889591
 MonoBehaviour:
   m_ObjectHideFlags: 0

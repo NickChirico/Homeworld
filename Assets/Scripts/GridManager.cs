@@ -20,7 +20,7 @@ public class GridManager : MonoBehaviour
 
     [Header("Generate Grid On Start")]
     [SerializeField] private bool generateSquareGridOnStart = false;
-    [SerializeField] private GridTile TilePrefab; // get from constant pool of tile options 
+    [SerializeField] private WorldTile TilePrefab; // get from constant pool of tile options 
 
 
     private void Awake() {

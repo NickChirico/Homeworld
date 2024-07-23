@@ -3,7 +3,7 @@ using UnityEngine;
 
 [ExecuteAlways]
 /** Attaches to Tile, Always updates its own label **/
-public class GridLabeler : MonoBehaviour
+public class TileLabeler : MonoBehaviour
 {
     TextMeshPro gridLabel;
     Vector2Int coordinates = new();
@@ -17,11 +17,9 @@ public class GridLabeler : MonoBehaviour
         UpdateCoordsLabel();
     }
 
-    private void Update() {
+    /*private void Update() {
         UpdateCoordsLabel();
-        // rename tile Object to coordinates
-        this.transform.name = coordinates.ToString();
-    }
+    }*/
 
     private void UpdateCoordsLabel() {
         if ( !gridManager ) return;
@@ -29,5 +27,6 @@ public class GridLabeler : MonoBehaviour
         coordinates.x = Mathf.RoundToInt( transform.position.x / gridManager.GridTransformSize );
         coordinates.y = Mathf.RoundToInt( transform.position.z / gridManager.GridTransformSize );
         gridLabel.text = $"{coordinates.x},{coordinates.y}";
+        this.transform.name = coordinates.ToString();
     }
 }
