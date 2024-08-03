@@ -1,24 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class WorldTile : Selectable
 {
-    public float transformY_Height;
+    [SerializeField]
+    private float transformY_Height;
     private Vector2Int gridCoords;
     private Vector3 worldPosition;
-    public Vector3 WorldPosition { get { return worldPosition; } }
-
     private bool isOccupied = false;
+    private TileLabeler labeler;
+
+    public Vector2Int GridCoords { get { return gridCoords; } }
+    public Vector3 WorldPosition { get { return worldPosition; } }
     public bool IsOccupied { get { return isOccupied; } }
 
+    public void SetGridCoords(Vector2Int coor ) { gridCoords = coor; }
 
     protected override void Awake() {
         base.Awake();
         this.selectType = SelectableType.TILE;
-        gridCoords = this.GetComponent<TileLabeler>().GetCoords;
-        worldPosition = new Vector3( gridCoords.x, transformY_Height, gridCoords.y );
+        labeler = this.GetComponent<TileLabeler>();
+    }
+
+    protected override void Start() {
+        this.UpdateGridCoords();
+        worldPosition = new Vector3( GridCoords.x, transformY_Height, GridCoords.y );
     }
 
     // ### Select / Highlight
@@ -57,4 +66,18 @@ public class WorldTile : Selectable
     public bool IsAvailable() {
         return !isOccupied;
     }
+
+    // #################### TILE LABELER
+
+    private void UpdateGridCoords() {
+        // TODO: Dont hardcode around (0,0) transform!
+        gridCoords.x = Mathf.RoundToInt( transform.position.x / GridManager.GridTransformSize );
+        gridCoords.y = Mathf.RoundToInt( transform.position.z / GridManager.GridTransformSize );
+
+        if ( labeler ) {
+            labeler.UpdateLabel( gridCoords );
+        }
+    }
 }
+
+

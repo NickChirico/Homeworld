@@ -43,6 +43,10 @@ public abstract class Selectable : MonoBehaviour
         }
     }
 
+    protected virtual void Start() {
+        // Start
+
+    }
 
     protected virtual void Update() {
         if ( !isHovered && highlightOutline.enabled == true ) {

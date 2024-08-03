@@ -31,6 +31,8 @@ public class CameraController : MonoBehaviour
     [Header( "Rotation" )]
     [SerializeField] private float rotateMaxSpeed = 1f;
     [SerializeField] private float rotateSnapBackTime = 0.5f;
+    [SerializeField] private float focusSnapDuration = 0.5f;
+    [SerializeField] [Range(1,9)] private int focusSnapHaste = 4;
 
     [Header( "Edge Scroll" )]
     [SerializeField]
@@ -41,6 +43,8 @@ public class CameraController : MonoBehaviour
     [Header( "Checks" )]
     [SerializeField] private bool enableEdgeScroll = true;
     [SerializeField] private bool enableDragScroll = true;
+    [SerializeField] private bool enableRotation = true;
+
 
     // instance vars
     private float currentSpeed;
@@ -51,7 +55,7 @@ public class CameraController : MonoBehaviour
     private Vector3 startDrag;
     private Quaternion baseRotation = Quaternion.Euler( 0f, y: 0f, 0f );
     private bool rotating = false;
-
+    private bool panning = false;
 
     private void Awake() {
         cameraActions = new CameraInputActions();
@@ -60,8 +64,7 @@ public class CameraController : MonoBehaviour
         targetZoom = cam.orthographicSize;
     }
 
-    private void Update()
-    {
+    private void Update() {
         _getKeyboardMovement();
         if ( enableEdgeScroll )
             _checkMouseAtScreenEdge();
@@ -76,7 +79,7 @@ public class CameraController : MonoBehaviour
     private void OnEnable() {
         lastPosition = this.transform.position;
         movement = cameraActions.CameraActions.Movement;
-        cameraActions.CameraActions.RotateKey.performed += EnableRotate;
+        cameraActions.CameraActions.RotateKey.performed += FocusTarget;
         cameraActions.CameraActions.RotateKey.canceled += CancelRotate;
         cameraActions.CameraActions.Rotate.performed += RotateCamera;
         cameraActions.CameraActions.Zoom.performed += ZoomCamera;
@@ -84,17 +87,8 @@ public class CameraController : MonoBehaviour
         cameraActions.CameraActions.Enable();
     }
 
-    private void EnableRotate( InputAction.CallbackContext context ) {
-        rotating = true;
-    }
-
-    private void CancelRotate( InputAction.CallbackContext context ) {
-        rotating = false;
-        StartCoroutine( snapBack() );
-    }
-
     private void OnDisable() {
-        cameraActions.CameraActions.RotateKey.performed -= EnableRotate;
+        cameraActions.CameraActions.RotateKey.performed -= FocusTarget;
         cameraActions.CameraActions.RotateKey.canceled -= CancelRotate;
         cameraActions.CameraActions.Rotate.performed -= RotateCamera;
         cameraActions.CameraActions.Zoom.performed -= ZoomCamera;
@@ -133,11 +127,14 @@ public class CameraController : MonoBehaviour
     }
 
     private void _updateBasePos() {
+        if ( panning )
+            return;
+
         if ( targetPos.sqrMagnitude > 0.1f ) {
             currentSpeed = Mathf.Lerp( currentSpeed, panSpeed, Time.deltaTime * panAcceleration );
             this.transform.position += targetPos * currentSpeed * Time.deltaTime;
         } else { // <= 0
-            horzVelocity = Vector3.Lerp(horzVelocity, Vector3.zero, Time.deltaTime * panDamping );
+            horzVelocity = Vector3.Lerp( horzVelocity, Vector3.zero, Time.deltaTime * panDamping );
             this.transform.position += horzVelocity * Time.deltaTime;
         }
         targetPos = Vector3.zero;
@@ -146,17 +143,17 @@ public class CameraController : MonoBehaviour
     // 
 
     private void RotateCamera( InputAction.CallbackContext context ) {
-        if(!rotating) {
-            return;
-        }
+        if ( !enableRotation ) return;
+        if ( !rotating ) return;
+
         float val = context.ReadValue<Vector2>().x;
         this.transform.rotation = Quaternion.Euler( 0f, val * rotateMaxSpeed + transform.rotation.eulerAngles.y, 0f );
     }
 
     private void ZoomCamera( InputAction.CallbackContext context ) {
-        if( context.ReadValue<Vector2>().y > 0 ) {
+        if ( context.ReadValue<Vector2>().y > 0 ) {
             // zoom in - size gets smaller
-            if(cam.orthographicSize - zoomStep <= zoomMinSize ) {
+            if ( cam.orthographicSize - zoomStep <= zoomMinSize ) {
                 targetZoom = zoomMinSize;
             } else {
                 targetZoom = cam.orthographicSize - zoomStep;
@@ -173,17 +170,6 @@ public class CameraController : MonoBehaviour
 
     private void _updateZoom() {
         cam.orthographicSize = Mathf.Lerp( cam.orthographicSize, targetZoom, Time.deltaTime * zoomDampening );
-    }
-
-    private IEnumerator snapBack() {
-        float elapsedTime = 0;
-        while (elapsedTime < rotateSnapBackTime) {
-            this.transform.rotation = Quaternion.Lerp( this.transform.rotation, baseRotation, ( elapsedTime / rotateSnapBackTime ) );
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        this.transform.rotation = baseRotation;
-        yield return null;
     }
 
     //
@@ -208,12 +194,12 @@ public class CameraController : MonoBehaviour
     }
 
     private void _dragCamera() {
-        if ( !Mouse.current.middleButton.isPressed )
+        if ( !Mouse.current.middleButton.isPressed ) // TODO : map buttons better 
             return;
 
         Plane plane = new Plane( Vector3.up, Vector3.zero );
         Ray ray = cam.ScreenPointToRay( Mouse.current.position.ReadValue() );
-        if(plane.Raycast(ray, out float distance ) ) {
+        if ( plane.Raycast( ray, out float distance ) ) {
             if ( Mouse.current.middleButton.wasPressedThisFrame ) {
                 startDrag = ray.GetPoint( distance );
             } else {
@@ -221,6 +207,54 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+
+    // 
+    private void FocusTarget( InputAction.CallbackContext context ) {
+        if ( context.performed && !panning && SelectionManager.GetSelected ) {
+            StartCoroutine( snapToTarget( SelectionManager.GetSelected.transform ) );
+        }
+
+        rotating = true;
+    }
+
+    private void CancelRotate( InputAction.CallbackContext context ) {
+        rotating = false;
+        StartCoroutine( rotateSnapBack() );
+    }
+
+    private IEnumerator rotateSnapBack() {
+        float elapsedTime = 0;
+        while ( elapsedTime < rotateSnapBackTime ) {
+            this.transform.rotation = Quaternion.Lerp( this.transform.rotation, baseRotation, ( elapsedTime / rotateSnapBackTime ) );
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        this.transform.rotation = baseRotation;
+        yield return null;
+    }
+
+    private IEnumerator snapToTarget( Transform target ) {
+        if ( !target )
+            yield return null;
+
+        panning = true;
+        float elapsedTime = 0;
+        //Vector3 snapToPos = new Vector3(target.position.x, this.transform.position.y, target.position.z );
+        Vector3 snapToPos = target.position;
+        while ( elapsedTime < focusSnapDuration ) {
+
+            if ( ( snapToPos - this.transform.position ).magnitude <= 0.005f ) {
+                this.transform.position = snapToPos;
+                panning = false;
+                lastPosition = snapToPos;
+                break;
+            } else {
+                this.transform.position = Vector3.Lerp( this.transform.position, snapToPos, ( elapsedTime / ( ( focusSnapHaste + 10 ) * 0.1f ) ) );
+            }
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        yield return null;
+    }
 }
-
-

@@ -4,12 +4,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class HighlightSelector : MonoBehaviour
+public class SelectionManager : MonoBehaviour
 {
+    private static SelectionManager _instance;
+    public static SelectionManager GetSelectionManager { get { return _instance; } }
+    public static Selectable GetSelected { get { return _instance.selected; } }
+
     private Transform current;
     private Selectable hovered;
     private Selectable selected;
     private RaycastHit raycasthit;
+
+    private void Awake() {
+        _instance = this;
+    }
 
     private void Update() {
 
@@ -31,7 +39,7 @@ public class HighlightSelector : MonoBehaviour
             if ( current != selected && ( hovered = current.GetComponent<Selectable>() ) != null ) {
                 hovered.Highlight();
             } else {
-                /* GAMEOBJECT IS NOT `SELECTABLE`
+                /* IF GAMEOBJECT IS NOT `SELECTABLE`
                 Outline outline = current.gameObject.AddComponent<Outline>();
                 outline.enabled = true;
                 current.gameObject.GetComponent<Outline>().OutlineColor = Color.magenta;

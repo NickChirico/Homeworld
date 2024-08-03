@@ -55,9 +55,12 @@ MonoBehaviour:
   zoomDampening: 7.5
   rotateMaxSpeed: 1
   rotateSnapBackTime: 1
+  focusSnapDuration: 0.5
+  focusSnapHaste: 9
   edgeTolerance: 0.05
   enableEdgeScroll: 0
   enableDragScroll: 1
+  enableRotation: 0
 --- !u!1 &2636569698209240410
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,7 +72,6 @@ GameObject:
   - component: {fileID: 4006135981394619597}
   - component: {fileID: 1133511659412534961}
   - component: {fileID: 3665264876327512558}
-  - component: {fileID: 436159579602393885}
   m_Layer: 0
   m_Name: DEBUG - cam_canter
   m_TagString: Untagged
@@ -120,7 +122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f13bbfc5eb0e669479d7d8a6a3c78d10, type: 2}
+  - {fileID: 2100000, guid: 842ce32fae6cf9548917df21070e5629, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -142,27 +144,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &436159579602393885
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2636569698209240410}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6576509763467086925
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +212,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 6
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
