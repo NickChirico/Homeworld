@@ -85,7 +85,6 @@ public class SelectionManager : MonoBehaviour
 
                 if ( selected ) {
                     if ( selected.isUnit && ( (WorldTile) current_select ).IsAvailable() ) {
-                        ( (Unit) selected ).LeaveCurrentSpot();
                         ( (Unit) selected ).MoveTo( (WorldTile) current_select );
                     } else {
                         // replace selection

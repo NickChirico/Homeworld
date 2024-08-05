@@ -6,15 +6,16 @@ using UnityEngine;
 
 public class WorldTile : Selectable
 {
-    [SerializeField]
-    private float transformY_Height;
+    public bool isWalkable;
+    public bool isBlocked;
+
     private Vector2Int gridCoords;
-    private Vector3 worldPosition;
+    private Vector3 centerPosition;
     private bool isOccupied = false;
     private TileLabeler labeler;
 
     public Vector2Int GridCoords { get { return gridCoords; } }
-    public Vector3 WorldPosition { get { return worldPosition; } }
+    public Vector3 CenterPosition { get { return centerPosition; } }
     public bool IsOccupied { get { return isOccupied; } }
 
     public void SetGridCoords(Vector2Int coor ) { gridCoords = coor; }
@@ -27,7 +28,7 @@ public class WorldTile : Selectable
 
     protected override void Start() {
         this.UpdateGridCoords();
-        worldPosition = new Vector3( GridCoords.x, transformY_Height, GridCoords.y );
+        centerPosition = new Vector3( GridCoords.x + ( GridManager.GridTransformSize * 0.5f ), 0f, GridCoords.y + ( GridManager.GridTransformSize * 0.5f ) );
     }
 
     // ### Select / Highlight
