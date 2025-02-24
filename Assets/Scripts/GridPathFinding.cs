@@ -40,6 +40,14 @@ public class GridPathFinding : MonoBehaviour
         } else {
             throw new System.Exception( "Couldnt get GridManager!! Failed to Start `GridPathFinding`" );
         }
+
+        // Move All Units to Starting Spot
+        foreach ( Unit unit in FindObjectsOfType<Unit>() ) {
+            WorldTile tile = gridManager.GetTileAtCoords( gridManager.GetCoordsFromPosition( unit.transform.position ) );
+            Debug.Log( $"UNIT ({this.name}), STARTING TILE: {tile.GridCoords.ToString()}" );
+            unit.SetCurrentSpot( tile );
+            unit.MoveTo( unit.CurrentSpot );
+        }
     }
 
     public List<GridNode> GetNewPath() {
@@ -106,10 +114,6 @@ public class GridPathFinding : MonoBehaviour
 
         path.Reverse();
         return path;
-    }
-
-    public void NotifyReceievers() {
-        BroadcastMessage("RecalculatePath", false, SendMessageOptions.DontRequireReceiver);
     }
 
     public void SetNewDestination(Vector2Int startCoords, Vector2Int targetCoords) {

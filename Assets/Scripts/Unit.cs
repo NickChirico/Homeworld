@@ -1,10 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Unit : Selectable
+public abstract class Unit : Selectable
 {
+    GridManager gridManager;
+    GridPathFinding pathFinder;
+
     [SerializeField] private float moveSpeed;
 
     protected WorldTile currentSpot;
@@ -17,6 +22,9 @@ public class Unit : Selectable
     // TODO: MOVE TO SUBCLASS!!
 
 
+    // GRID PATH 
+    private List<GridNode> path = new();
+
 
     protected override void Awake() {
         base.Awake();
@@ -26,9 +34,8 @@ public class Unit : Selectable
     protected override void Start() {
         base.Start();
 
-        // temp, get currentSpot on Spawn
-        //Vector2Int startingCoords = GridManager.GetGridManager.GetCoordsFromPosition( this.transform.position );
-        //this.currentSpot = GridManager.GetGridManager.GetTileAtCoords( startingCoords );
+        gridManager = GridManager.GetGridManager;
+        pathFinder = GridPathFinding.GetPathFinding;
     }
 
     public override void Highlight() {
@@ -58,24 +65,48 @@ public class Unit : Selectable
 
     public void MoveTo( WorldTile target ) {
 
-        // TODO: Should there be one SINGLETON UnitGridControl? Or one one each Unit running simul
-        Debug.Log( $"MOVING TO ({target.name}), from  SPOT {CurrentSpot.name}" );
-        UnitGridController.GetUnitController.MoveUnitToSpace(this, target);
+        // Debug.Log( $"MOVING TO ({target.name}), from  SPOT {CurrentSpot.name}" );
+
+        pathFinder.SetNewDestination( this.CurrentSpot.GridCoords, target.GridCoords );
+        this.SetCurrentSpot( target.Occupy() );
+        this.RecalculatePath( true, this.MoveSpeed );
+
     }
 
-    /*public Vector2Int[] GetAvailableMoves() {
+    //public Vector2Int[] GetAvailableMoves() {
+    //    
+    // }
 
-        int numLegalSpaces = 0;
+    void RecalculatePath( bool resetPath, float speed = 3f ) {
+        Vector2Int coords = new();
+        if ( resetPath ) {
+            coords = pathFinder.StartCoords;
+        } else {
+            coords = gridManager.GetCoordsFromPosition( transform.position );
+        }
 
-        Vector2Int[] allTilesInRange = GridManager.GetAllTilesInRange( currentSpot.GridCoords, visionRange );
+        StopAllCoroutines();
+        path.Clear();
+        path = pathFinder.GetNewPath( coords );
+        StartCoroutine( FollowPath( speed ) );
+    }
 
-        Debug.Log( $"GOT ({allTilesInRange.Length}) Tiles within {visionRange} !" );
+    private IEnumerator FollowPath( float moveSpeed ) {
+        for ( int i = 0; i < path.Count; i++ ) {
+            Vector3 startPos = this.transform.position;
+            Vector3 endPos = gridManager.GetWorldPosFromCoords( path[ i ].Coords );
+            float travelPercent = 0f;
 
+            // TODO: TURN to face destination
+            //selectedUnit.LookAt( endPos );
 
-
-
-        return null;
-    }*/
+            while ( travelPercent < 1f ) {
+                travelPercent += Time.deltaTime * moveSpeed;
+                this.transform.position = Vector3.Lerp( startPos, endPos, travelPercent );
+                yield return new WaitForEndOfFrame();
+            }
+        }
+    }
 
 
 }

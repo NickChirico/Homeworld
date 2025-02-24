@@ -46,13 +46,6 @@ public class GridManager : MonoBehaviour
                 _addTileToGrid( tile );
             }
         }
-
-        foreach ( Unit unit in FindObjectsOfType<Unit>() ) {
-            WorldTile tile = GetTileAtCoords( GetCoordsFromPosition( unit.transform.position ) );
-            unit.SetCurrentSpot( tile );
-            // TODO: Broken - move unit to current spot on spawn
-            // UnitGridController.GetUnitController.MoveUnitToSpace( unit, tile );
-        }
     }
 
     private void _generateSquareGrid( int length, int width ) {
@@ -144,7 +137,7 @@ public class GridManager : MonoBehaviour
     public Vector2Int GetCoordsFromPosition(Vector3 worldPos) {
         Vector2Int coords = new();
         coords.x = Mathf.RoundToInt( worldPos.x / gridTransformSize );
-        coords.y = Mathf.RoundToInt( worldPos.y / gridTransformSize );
+        coords.y = Mathf.RoundToInt( worldPos.z / gridTransformSize );
         return coords;
     }
 

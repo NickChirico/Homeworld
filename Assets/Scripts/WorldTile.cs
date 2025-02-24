@@ -24,11 +24,14 @@ public class WorldTile : Selectable
         base.Awake();
         this.selectType = SelectableType.TILE;
         labeler = this.GetComponent<TileLabeler>();
+        this.UpdateGridCoords();
+        centerPosition = new Vector3( GridCoords.x + ( GridManager.GridTransformSize * 0.5f ), 0f, GridCoords.y + ( GridManager.GridTransformSize * 0.5f ) );
     }
 
     protected override void Start() {
-        this.UpdateGridCoords();
-        centerPosition = new Vector3( GridCoords.x + ( GridManager.GridTransformSize * 0.5f ), 0f, GridCoords.y + ( GridManager.GridTransformSize * 0.5f ) );
+        labeler.UpdateLabel( gridCoords );
+        //centerPosition = new Vector3( GridCoords.x + ( GridManager.GridTransformSize * 0.5f ), 0f, GridCoords.y + ( GridManager.GridTransformSize * 0.5f ) );
+
     }
 
     // ### Select / Highlight
@@ -70,10 +73,13 @@ public class WorldTile : Selectable
 
     // #################### TILE LABELER
 
+    // happens on Awake
     private void UpdateGridCoords() {
         // TODO: Dont hardcode around (0,0) transform!
         gridCoords.x = Mathf.RoundToInt( transform.position.x / GridManager.GridTransformSize );
         gridCoords.y = Mathf.RoundToInt( transform.position.z / GridManager.GridTransformSize );
+
+        //Debug.Log( gridCoords.ToString() );
 
         if ( labeler ) {
             labeler.UpdateLabel( gridCoords );

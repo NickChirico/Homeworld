@@ -11,8 +11,11 @@ public class TileLabeler : MonoBehaviour
     }
 
     public void UpdateLabel(Vector2Int coords) {
-        gridLabel.text = $"{coords.x},{coords.y}";
-        //Debug.Log( "coordinates: " + coords.ToString() );
-        this.transform.name = coords.ToString();
+        if ( gridLabel != null ) {
+
+            gridLabel.text = $"{coords.x},{coords.y}";
+            //Debug.Log( "coordinates: " + coords.ToString() );
+            this.transform.name = coords.ToString();
+        }
     }
 }

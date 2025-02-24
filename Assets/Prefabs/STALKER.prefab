@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f13bbfc5eb0e669479d7d8a6a3c78d10, type: 2}
+  - {fileID: 2100000, guid: aceb0d0ca9681e5459a8acb614ac0971, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fa1516a874a358248af2a20c91fffb29, type: 2}
+  - {fileID: 2100000, guid: dee98920e55e4a64499a15770eb01d25, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -177,9 +177,10 @@ GameObject:
   - component: {fileID: 7717128947303395540}
   - component: {fileID: 6403765810771676970}
   - component: {fileID: 2963121802054925299}
-  - component: {fileID: 5204461813850398531}
+  - component: {fileID: 5796968489365499991}
+  - component: {fileID: 5491008212252522286}
   m_Layer: 0
-  m_Name: UNIT
+  m_Name: STALKER
   m_TagString: UNIT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -243,7 +244,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &5204461813850398531
+--- !u!114 &5796968489365499991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,8 +253,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5926725557855673358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f200b16ba56a9c34295aff8876245d8d, type: 3}
+  m_Script: {fileID: 11500000, guid: ff3471259b39f6e46a33746b076cb57b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hasSelectIndicator: 1
-  moveSpeed: 8
+  moveSpeed: 5
+--- !u!114 &5491008212252522286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5926725557855673358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20083753629b8dd498623b19b3937256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
