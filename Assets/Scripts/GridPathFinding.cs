@@ -38,7 +38,7 @@ public class GridPathFinding : MonoBehaviour
         if ( gridManager ) {
             grid = gridManager.Grid;
         } else {
-            throw new System.Exception( "Couldnt get GridManager!! Failed to Start `GridPathFinding`" );
+            throw new System.Exception( "Couldnt get GridManager!! Failed to Start() `GridPathFinding`" );
         }
 
         // Move All Units to Starting Spot

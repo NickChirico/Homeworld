@@ -27,7 +27,6 @@ public abstract class Selectable : MonoBehaviour
         if ( highlightOutline == null ) {
             throw new System.Exception( $"{this.name} HAS NO `Outline` COMPONENT" );
         }
-        highlightOutline.enabled = false;
 
         if ( hasSelectIndicator ) {
             foreach ( Transform transform in this.transform ) {
@@ -49,7 +48,7 @@ public abstract class Selectable : MonoBehaviour
     }
 
     protected virtual void Update() {
-        if ( !isHovered && highlightOutline.enabled == true ) {
+        if ( !isHovered && highlightOutline.enabled) {
             UnHighlight();
         }
     }
@@ -77,8 +76,8 @@ public abstract class Selectable : MonoBehaviour
         _refreshSelectIndicator( isSelected = false);
     }
 
-    private void _refreshHighlightIndicator(bool b) {
-        highlightOutline.enabled = b;
+    private void _refreshHighlightIndicator(bool show) {
+        highlightOutline.enabled = show;
     }
 
     private void _refreshSelectIndicator(bool b) {

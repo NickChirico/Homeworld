@@ -30,7 +30,7 @@ public class WorldTile : Selectable
 
     protected override void Start() {
         labeler.UpdateLabel( gridCoords );
-        //centerPosition = new Vector3( GridCoords.x + ( GridManager.GridTransformSize * 0.5f ), 0f, GridCoords.y + ( GridManager.GridTransformSize * 0.5f ) );
+        //_initOutline();
 
     }
 

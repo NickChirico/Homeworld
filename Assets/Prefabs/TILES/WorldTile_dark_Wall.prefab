@@ -166,7 +166,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasSelectIndicator: 0
-  transformY_Height: 0.54
+  isWalkable: 0
+  isBlocked: 0
+  isHazard: 0
 --- !u!114 &4177770952618889591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +198,7 @@ GameObject:
   - component: {fileID: 5783134076470419098}
   - component: {fileID: 2268890049937276668}
   - component: {fileID: 7709210479358578910}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

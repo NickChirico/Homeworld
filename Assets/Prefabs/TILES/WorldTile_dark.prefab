@@ -166,7 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasSelectIndicator: 0
-  transformY_Height: 0.54
+  isWalkable: 0
+  isBlocked: 0
 --- !u!114 &4177770952618889591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 0, g: 0.9906864, b: 1, a: 1}
+  outlineColor: {r: 1, g: 0.5678135, b: 0.5330188, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
@@ -196,7 +197,7 @@ GameObject:
   - component: {fileID: 5783134076470419098}
   - component: {fileID: 2268890049937276668}
   - component: {fileID: 7709210479358578910}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
